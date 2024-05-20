@@ -2,6 +2,7 @@ import dotenv from 'dotenv';
 import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
+import Item from './models/Item';
 
 dotenv.config();
 
@@ -23,6 +24,16 @@ app.post('/items', async (req, res) => {
     res.status(201).json(newItem);
   } catch (err) {
     res.status(400).json({ message: err.message });
+  }
+});
+
+// Index
+app.get('/items', async (req, res) => {
+  try {
+    const items = await Item.find();
+    res.status(200).json(items);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
 });
 
