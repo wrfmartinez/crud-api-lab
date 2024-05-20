@@ -15,6 +15,17 @@ mongoose.connection.on('connected', () => {
   console.log(`Connection successful to MONGODB ${mongoose.connection.name}`);
 });
 
+// Routes
+// Create
+app.post('/items', async (req, res) => {
+  try {
+    const newItem = await Item.create(req.body);
+    res.status(201).json(newItem);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
+
 const PORT = 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port: ${PORT}`);
